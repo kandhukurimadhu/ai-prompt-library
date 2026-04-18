@@ -21,7 +21,7 @@ export interface CreatePromptPayload {
   providedIn: 'root'
 })
 export class PromptService {
-  private apiBase = '/prompts';
+ private apiBase = 'https://ai-prompt-library-backend-pl4q.onrender.com/prompts';
 
   constructor(private http: HttpClient) {}
 
