@@ -1,0 +1,107 @@
+<div class="form-container">
+  <div class="page-header fade-up">
+    <div class="page-eyebrow">// new prompt</div>
+    <h1 class="page-title">Add Prompt</h1>
+    <p class="page-subtitle">Save an AI image generation prompt to your library.</p>
+  </div>
+
+  <div class="alert alert-success fade-up" *ngIf="submitSuccess">
+    ✓ Prompt saved! Redirecting...
+  </div>
+
+  <div class="alert alert-error fade-up" *ngIf="submitError">
+    {{ submitError }}
+  </div>
+
+  <div class="form-card fade-up fade-up-1">
+    <form [formGroup]="promptForm" (ngSubmit)="onSubmit()" novalidate>
+
+      <!-- TITLE -->
+      <div class="form-group">
+        <label class="form-label">
+          <span>Title</span>
+          <span class="char-hint">min 3 characters</span>
+        </label>
+        <input
+          type="text"
+          class="form-input"
+          formControlName="title"
+          placeholder="e.g. Cyberpunk City at Night"
+          autocomplete="off"
+        />
+        <div class="form-error" *ngIf="title.invalid && title.touched">
+          <ng-container *ngIf="title.errors?.['required']">Title is required.</ng-container>
+          <ng-container *ngIf="title.errors?.['minlength']">Title must be at least 3 characters.</ng-container>
+        </div>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="form-group">
+        <label class="form-label">
+          <span>Content</span>
+          <span class="char-hint">min 20 characters</span>
+        </label>
+        <textarea
+          class="form-textarea"
+          formControlName="content"
+          placeholder="Describe your AI image generation prompt in detail..."
+        ></textarea>
+        <div class="form-error" *ngIf="content.invalid && content.touched">
+          <ng-container *ngIf="content.errors?.['required']">Content is required.</ng-container>
+          <ng-container *ngIf="content.errors?.['minlength']">Content must be at least 20 characters.</ng-container>
+        </div>
+      </div>
+
+      <!-- COMPLEXITY -->
+      <div class="form-group">
+        <label class="form-label">
+          <span>Complexity</span>
+          <span class="char-hint">1 (simple) → 10 (complex)</span>
+        </label>
+        <div class="complexity-input-wrap">
+          <input
+            type="number"
+            class="form-input"
+            formControlName="complexity"
+            min="1"
+            max="10"
+            placeholder="1–10"
+          />
+          <div class="complexity-bar">
+            <div
+              class="complexity-fill"
+              [style.width]="complexityFillPercent"
+              [style.background]="complexityFillColor"
+            ></div>
+          </div>
+          <span class="complexity-badge"
+            [ngClass]="{
+              'complexity-low': complexityValue <= 3,
+              'complexity-medium': complexityValue > 3 && complexityValue <= 6,
+              'complexity-high': complexityValue > 6
+            }">
+            {{ complexityValue }}
+          </span>
+        </div>
+        <div class="form-error" *ngIf="complexity.invalid && complexity.touched">
+          <ng-container *ngIf="complexity.errors?.['required']">Complexity is required.</ng-container>
+          <ng-container *ngIf="complexity.errors?.['min'] || complexity.errors?.['max']">Complexity must be between 1 and 10.</ng-container>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div style="display:flex; gap: 0.75rem; margin-top: 0.5rem;">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="submitting || submitSuccess"
+        >
+          <span *ngIf="!submitting">Save Prompt</span>
+          <span *ngIf="submitting">Saving...</span>
+        </button>
+        <a routerLink="/prompts" class="btn btn-ghost">Cancel</a>
+      </div>
+
+    </form>
+  </div>
+</div>

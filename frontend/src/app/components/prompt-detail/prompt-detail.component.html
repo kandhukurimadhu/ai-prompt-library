@@ -1,0 +1,48 @@
+<div class="detail-container">
+  <a routerLink="/prompts" class="back-link fade-up">
+    ← Back to library
+  </a>
+
+  <div class="loading-wrap" *ngIf="loading">
+    <div class="spinner"></div>
+    <span>Loading prompt...</span>
+  </div>
+
+  <div class="alert alert-error fade-up" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <ng-container *ngIf="!loading && !error && prompt">
+    <div class="detail-header fade-up">
+      <div style="flex:1">
+        <h1 class="detail-title">{{ prompt.title }}</h1>
+        <div class="detail-meta-row">
+          <span class="complexity-badge" [ngClass]="complexityClass(prompt.complexity)">
+            {{ complexityLabel(prompt.complexity) }}
+          </span>
+          <span class="meta-chip">
+            <span class="dot"></span>
+            {{ formatDate(prompt.created_at) }}
+          </span>
+          <span class="meta-chip">
+            <span class="dot"></span>
+            ID #{{ prompt.id }}
+          </span>
+        </div>
+      </div>
+
+      <div class="view-counter fade-up fade-up-2">
+        <div>
+          <div class="count-number">{{ prompt.view_count ?? 0 }}</div>
+          <div class="count-label">Views</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-eyebrow fade-up fade-up-2" style="margin-bottom: 0.75rem">
+      // prompt content
+    </div>
+
+    <div class="content-block fade-up fade-up-3">{{ prompt.content }}</div>
+  </ng-container>
+</div>

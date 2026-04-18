@@ -1,0 +1,43 @@
+<div class="page-header fade-up">
+  <div class="page-eyebrow">// prompt library</div>
+  <h1 class="page-title">
+    All Prompts
+    <span class="count-badge">{{ prompts.length }}</span>
+  </h1>
+  <p class="page-subtitle" *ngIf="!loading && !error">
+    Browse your collection of AI image generation prompts.
+  </p>
+</div>
+
+<div class="loading-wrap" *ngIf="loading">
+  <div class="spinner"></div>
+  <span>Fetching prompts...</span>
+</div>
+
+<div class="alert alert-error fade-up" *ngIf="error">
+  {{ error }}
+</div>
+
+<div class="empty-state fade-up" *ngIf="!loading && !error && prompts.length === 0">
+  <div class="empty-icon">◈</div>
+  <h3>No prompts yet</h3>
+  <p>Add your first prompt to get started.</p>
+</div>
+
+<div class="prompts-grid" *ngIf="!loading && !error && prompts.length > 0">
+  <a
+    *ngFor="let p of prompts; let i = index"
+    class="prompt-card fade-up"
+    [style.animation-delay]="(i * 40) + 'ms'"
+    [routerLink]="['/prompts', p.id]"
+  >
+    <div class="card-top">
+      <span class="card-title">{{ p.title }}</span>
+      <span class="complexity-badge" [ngClass]="complexityClass(p.complexity)">
+        {{ complexityLabel(p.complexity) }}
+      </span>
+    </div>
+    <div class="card-meta">{{ formatDate(p.created_at) }}</div>
+    <div class="card-arrow">→</div>
+  </a>
+</div>

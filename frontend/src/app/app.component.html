@@ -1,0 +1,22 @@
+<div class="page-shell">
+  <nav class="nav">
+    <a routerLink="/prompts" class="nav-brand">
+      <span class="brand-dot"></span>
+      PromptLib
+    </a>
+    <div class="nav-links">
+      <a routerLink="/prompts" class="nav-link" [class.active]="isActive('prompts')">Library</a>
+      <a routerLink="/add-prompt" class="nav-link cta" [class.active]="isActive('add-prompt')">+ New Prompt</a>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer">
+    <span>AI Prompt Library</span>
+    <span>·</span>
+    <span>Angular + Django + PostgreSQL + Redis</span>
+  </footer>
+</div>
